@@ -5,9 +5,8 @@ int factorial(int number){
         return 1;
     }
     return factorial(number - 1) * number;
-
-
 }
+
 int main() {
     int number(10);
     std::cout << factorial(number);
