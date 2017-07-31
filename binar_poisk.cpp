@@ -4,7 +4,7 @@
 int main(){
     std::vector<int> massive{5, 5};
     int left(0);
-    int right(massive.size() - 1);
+    int right(massive.size());
     int middle;
     int x(5);
 
@@ -19,20 +19,8 @@ int main(){
             right = middle;
         }
     }
-    if(right == left){
-        if (x == massive[left]) {
-            std::cout << left;
-        } else {
-            std::cout << "-1";
-        }
-    } else if (right == left + 1){
-        if (x == massive[left]) {
-            std::cout << left;
-        } else if (x == massive[right]) {
-            std::cout << right;
-        } else {
-            std::cout << "-1";
-        }
+    if (right == left + 1 && x == massive[left]){
+        std::cout << left;
     } else {
         std::cout << "-1";
     }
