@@ -1,18 +1,19 @@
-//labirint02.cpp
+//labirint03.cpp
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
 using namespace std;
+#include <fstream>
 
 int m, n;
-int  a[100][100];
-int b1[100][100];
-int b2[100][100];
-int b3[100][100];
+int  a[20][20];
+int b1[20][20];
+int b2[20][20];
+int b3[20][20];
 
 void clear(void){
     for(int i = 0; i < m; i++){
-        for(int j = 0;j < n; j++){
+        for(int j = 0; j < n; j++){
         if(a[i][j] != 1) a[i][j] = 0;
         }
     }
@@ -52,34 +53,41 @@ int wave(int iA, int jA, int iB, int jB){
 }
 
 int main(){
-    int mark;
-    FILE *fr;
-    fr = fopen("dataA1.dat", "r");
-    fscanf(fr, "%d%d", &m, &n);
-    if(m > 100) m = 100;
-    if(n > 100) n = 100;
+    int iA, jA, iB, jB, mark;
+    ifstream input("dataA1.dat");
+    input >> m;
+    input >> n;
+    if(m > 20) m = 20;
+    if(n > 20) n = 20;
+    input >> iA;
+    input >> jA;
+    input >> iB;
+    input >> jB;
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
-            fscanf(fr, "%d", &a[i][j]);
+            input >> a[i][j];
         }
     }
-    fclose(fr);
+    input.close();
     cout << "\n";
+
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
-            if(a[i][j] == 1) printf("%c", 35);
-            else if(a[i][j] == 0) printf(" ");
+            if(a[i][j] == 1) cout << static_cast<char>(35);
+            else if(a[i][j] == 0) cout << (" ");
         }
         cout << "\n";
     }
     cout << "\n";
 
     clear();
-    mark = wave(1, 1, 5, 5);
+    mark = wave(iA, jA, iB, jB);
     printf("mark = %d \n", mark);
+    cout << "\n";
+    printf("b1; \n");
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
-            printf("%3d", a[i][j]);
+            cout << setw(3) << a[i][j];
         }
         cout << "\n";
     }
@@ -91,11 +99,12 @@ int main(){
         }
     }
     clear();
-    mark = wave(5, 5, 1, 1);
-    printf("mark = %d \n", mark);
+    mark = wave(iB, jB, iA, jA);
+    cout << "\n";
+    printf("b2: \n");
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
-            printf("%3d", a[i][j]);
+            cout << setw(3) << a[i][j];
         }
         cout << "\n";
     }
@@ -106,6 +115,7 @@ int main(){
             b2[i][j] = a[i][j];
         }
     }
+
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
             b3[i][j] = b1[i][j] + b2[i][j];
@@ -117,20 +127,21 @@ int main(){
     printf("b3 = b1 + b2: \n");
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
-            printf("%3d", b3[i][j]);
+            cout << setw(3) << b3[i][j];
         }
         cout << "\n";
     }
     cout << "\n";
 
     printf("b3CLEAR: \n");
+    int b311 = b3[1][1];
     for(int i = 0; i < m; i++){
         for(int j = 0; j < n; j++){
            if(b3[i][j] == 2)
-           printf("%c", 35);
-            else if(b3[i][j] == b3[1][1])
-                  printf("%c", 42);
-                else printf(" ");
+           cout << setw(3) << static_cast<char>(35);
+            else if(b3[i][j] == b311)
+                 cout << setw(3) << static_cast<char>(42);
+                else cout << setw(3) << static_cast<char>(0);;
         }
         cout << "\n";
     }
